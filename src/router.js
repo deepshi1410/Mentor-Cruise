@@ -1,32 +1,32 @@
 import { createRouter, createWebHistory } from 'vue-router'
 // importing all the views components and registering them with the routes
-import TrainersList from './views/trainers/TrainersList.vue'
-import TrainerDetails from './views/trainers/TrainerDetails.vue'
-import ContactTrainer from './views/requests/ContactTrainer.vue'
-import TrainerRegisteration from './views/trainers/TrainerDetails.vue'
+import MentorsList from './views/mentors/MentorsList.vue'
+import MentorDetails from './views/mentors/MentorDetails.vue'
+import ContactMentor from './views/requests/ContactMentor.vue'
+import MentorRegisteration from './views/mentors/MentorDetails.vue'
 import RequestsReceived from './views/requests/RequestsReceived.vue'
 import NotFound from './views/NotFound.vue'
 const router = createRouter({
   history: createWebHistory(),
   routes: [{
     path: '/',
-    redirect: '/trainers'
+    redirect: '/Mentors'
   },
   {
-    path: '/trainers',
-    component: TrainersList
+    path: '/Mentors',
+    component: MentorsList
   },
   {
-    path: '/trainers/:id',
-    component: TrainerDetails,
+    path: '/Mentors/:id',
+    component: MentorDetails,
     children: [{
       path: 'contact',
-      component: ContactTrainer
+      component: ContactMentor
     }]
   },
   {
     path: '/register',
-    component: TrainerRegisteration
+    component: MentorRegisteration
   },
   {
     path: '/requests',
