@@ -1,8 +1,9 @@
-import getters from './store/requests/getters.js'
-import actions from './store/requests/actions.js'
-import mutations from './store/requests/mutations.js'
+import getters from './getters.js'
+import actions from './actions.js'
+import mutations from './mutations.js'
 
 export default {
+  namespaced: true,
   state() {
 
   },
