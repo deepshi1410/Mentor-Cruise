@@ -23,6 +23,7 @@ export default {
       formIsValid: true,
     };
   },
+  props: ['id'],
   methods: {
     submitForm() {
       this.formIsValid = true;
@@ -34,6 +35,13 @@ export default {
         this.formIsValid = false;
         return;
       }
+      const formData = {
+        mentorId: this.$route.params.id,
+        email: this.email,
+        message: this.email,
+      };
+      this.$store.dispatch('addRequest', formData);
+      this.$router.replace('/mentors');
     },
   },
 };

@@ -11,6 +11,7 @@
         <h2>Interested? Reach Out Now!!</h2>
         <base-button isLink :to="contactLink">Contact</base-button>
       </header>
+      <router-view></router-view>
     </base-card>
   </section>
   <section>

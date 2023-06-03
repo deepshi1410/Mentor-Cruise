@@ -34,6 +34,9 @@ export default {
     isMentor() {
       return this.$store.getters['mentors/isMentor'];
     },
+    hasMentors() {
+      return this.$store.getters['mentors/hasMentors'];
+    },
     filteredMentors() {
       // since getters are namespaced, they can't be accessed via this.$store.getters.getter_name
       const mentors = this.$store.getters['mentors/mentors'];
@@ -53,9 +56,6 @@ export default {
         }
         return false;
       });
-    },
-    hasMentors() {
-      return this.$store.getters['mentors/hasMentors'];
     },
   },
   data() {

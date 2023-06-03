@@ -27,7 +27,8 @@ export default {
       return `${this.firstName} ${this.lastName}`;
     },
     mentorContactLink() {
-      return `mentors/${this.id}/contact`;
+      return this.$route.path + '/' + this.id + '/contact';
+      // return `/mentors/${this.id}/contact`;
       // return { name: 'contact-mentor', params: { id: this.id } };
     },
     mentorDetailsLink() {
