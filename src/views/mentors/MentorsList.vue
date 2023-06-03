@@ -6,7 +6,9 @@
     <base-card>
       <div class="controls">
         <base-button mode="outline">Refresh</base-button>
-        <base-button to="/register" isLink>Register as Mentor</base-button>
+        <base-button v-if="!isMentor" to="/register" isLink
+          >Register as Mentor</base-button
+        >
       </div>
       <ul v-if="hasMentors">
         <mentor-item
@@ -29,6 +31,9 @@ import MentorFilter from '../../components/Mentors/MentorFilter.vue';
 export default {
   components: { MentorItem, MentorFilter },
   computed: {
+    isMentor() {
+      return this.$store.getters['mentors/isMentor'];
+    },
     filteredMentors() {
       // since getters are namespaced, they can't be accessed via this.$store.getters.getter_name
       const mentors = this.$store.getters['mentors/mentors'];
@@ -64,7 +69,6 @@ export default {
   },
   methods: {
     updateFilters(updatedFilters) {
-      console.log(updatedFilters);
       this.activeFilters = updatedFilters;
     },
   },
