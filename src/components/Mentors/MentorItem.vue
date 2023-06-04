@@ -32,7 +32,8 @@ export default {
       // return { name: 'contact-mentor', params: { id: this.id } };
     },
     mentorDetailsLink() {
-      return { name: 'mentor-details', params: { id: this.id } };
+      // return { name: 'mentor-details', params: { id: this.id } };
+      return this.$route.path + '/' + this.id;
     },
   },
 };
