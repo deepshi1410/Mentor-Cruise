@@ -7,8 +7,7 @@
       <base-spinner></base-spinner>
     </base-dialog>
     <base-card>
-    <base-card>
-      <form @submit.prvent="submitForm">
+      <form @submit.prevent="submitForm">
         <div class="form-control">
           <label for="email">Email</label>
           <input type="email" id="email" v-model.trim="email" />
@@ -37,7 +36,7 @@ export default {
       isFormValid: true,
       mode: 'login',
       isLoading: false,
-      error : null
+      error: null,
     };
   },
   computed: {
@@ -68,20 +67,20 @@ export default {
         return;
       }
       // send http request
-      this.isLoading = true
+      this.isLoading = true;
       try {
         if (this.mode === 'login') {
-
+          // add omething
         } else {
           await this.$store.dispatch('signup', {
             email: this.email,
-            password: this.password
-          })
+            password: this.password,
+          });
         }
       } catch (error) {
-        this.error = error || 'Faile to authenticate. Try again later.'
+        this.error = error || 'Faile to authenticate. Try again later.';
       }
-      this.isLoading = false
+      this.isLoading = false;
     },
     switchAuthMode() {
       if (this.mode === 'login') {
@@ -92,7 +91,7 @@ export default {
     },
     handleError() {
       this.error = null;
-    }
+    },
   },
 };
 </script>
@@ -123,7 +122,7 @@ textarea {
 
 input:focus,
 textarea:focus {
-  border-color: #3d008d;
+  border-color: #2ca00f;
   background-color: #faf6ff;
   outline: none;
 }

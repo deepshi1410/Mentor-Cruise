@@ -1,11 +1,8 @@
 export default {
-  contactMentor(context, payload) {
-    const newRequestData = {
-      id: new Date().toISOString(),
-      mentorId: payload.mentorId,
-      email: payload.email,
-      message: payload.message
-    }
-    context.commit('addRequest', newRequestData)
+  addRequest(state, payload) {
+    state.requests.push(payload);
+  },
+  setRequests(state, payload) {
+    state.requests = payload;
   }
 }

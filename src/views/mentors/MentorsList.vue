@@ -1,42 +1,68 @@
 <template>
-  <base-dialog :show="!!error" title="An error occurred!" @close="handleError">
-    <p>{{ error }}</p>
-  </base-dialog>
-  <section>
-    <mentor-filter @filters-changed="updateFilters"></mentor-filter>
-  </section>
-  <section>
-    <base-card>
-      <div class="controls">
-        <base-button mode="outline" @click="loadMentors">Refresh</base-button>
-        <base-button v-if="!isMentor && !isLoading" to="/register" isLink
-          >Register as Mentor</base-button
-        >
-      </div>
-      <div v-if="isLoading">
-        <base-spinner></base-spinner>
-      </div>
-      <ul v-if="hasMentors">
-        <mentor-item
-          v-for="mentor in filteredMentors"
-          :key="mentor.id"
-          :id="mentor.id"
-          :firstName="mentor.firstName"
-          :lastName="mentor.lastName"
-          :areas="mentor.areas"
-          :rate="mentor.hourlyRate"
-        ></mentor-item>
-      </ul>
-      <h3 v-else>No Mentors found.</h3>
-    </base-card>
-  </section>
+  <div>
+    <base-dialog
+      :show="!!error"
+      title="An error occurred!"
+      @close="handleError"
+    >
+      <p>{{ error }}</p>
+    </base-dialog>
+    <section>
+      <mentor-filter @filters-changed="updateFilters"></mentor-filter>
+    </section>
+    <section>
+      <base-card>
+        <div class="controls">
+          <base-button mode="outline" @click="loadMentors(true)"
+            >Refresh</base-button
+          >
+          <base-button link to="/auth" v-if="!isLoggedIn">Login</base-button>
+          <base-button
+            v-if="isLoggedIn && !isMentor && !isLoading"
+            link
+            to="/register"
+            >Register as Mentor</base-button
+          >
+        </div>
+        <div v-if="isLoading">
+          <base-spinner></base-spinner>
+        </div>
+        <ul v-if="hasMentors">
+          <mentor-item
+            v-for="mentor in filteredMentors"
+            :key="mentor.id"
+            :id="mentor.id"
+            :firstName="mentor.firstName"
+            :lastName="mentor.lastName"
+            :areas="mentor.areas"
+            :rate="mentor.hourlyRate"
+          ></mentor-item>
+        </ul>
+        <h3 v-else>No Mentors found.</h3>
+      </base-card>
+    </section>
+  </div>
 </template>
 <script>
 import MentorItem from '../../components/Mentors/MentorItem.vue';
 import MentorFilter from '../../components/Mentors/MentorFilter.vue';
 export default {
   components: { MentorItem, MentorFilter },
+  data() {
+    return {
+      activeFilters: {
+        frontend: true,
+        backend: true,
+        career: true,
+      },
+      isLoading: false,
+      error: null,
+    };
+  },
   computed: {
+    isLoggedIn() {
+      return this.$store.isAuthenticated;
+    },
     isMentor() {
       return this.$store.getters['mentors/isMentor'];
     },
@@ -67,26 +93,17 @@ export default {
   created() {
     this.loadMentors();
   },
-  data() {
-    return {
-      activeFilters: {
-        frontend: true,
-        backend: true,
-        career: true,
-      },
-      isLoading: false,
-      error: null,
-    };
-  },
   methods: {
     updateFilters(updatedFilters) {
       this.activeFilters = updatedFilters;
     },
-    async loadMentors() {
+    async loadMentors(refresh = false) {
       this.isLoading = true;
       try {
-        await this.$store.dispatch('mentors/loadMentors');
-      } catch {
+        await this.$store.dispatch('mentors/loadMentors', {
+          forceRefresh: refresh,
+        });
+      } catch (error) {
         this.error = error.message || 'Something went wrong!';
       }
       this.isLoading = false;

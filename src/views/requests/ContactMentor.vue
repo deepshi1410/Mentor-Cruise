@@ -35,12 +35,12 @@ export default {
         this.formIsValid = false;
         return;
       }
-      const formData = {
+      const requestData = {
         mentorId: this.$route.params.id,
         email: this.email,
         message: this.email,
       };
-      this.$store.dispatch('addRequest', formData);
+      this.$store.dispatch('addRequest', requestData);
       this.$router.replace('/mentors');
     },
   },
