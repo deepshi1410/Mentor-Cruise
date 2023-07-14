@@ -1,4 +1,7 @@
 <template>
+  <base-dialog :show="!!error" title="An error occurred!" @close="handleError">
+    <p>{{ error }}</p>
+  </base-dialog>
   <section>
     <mentor-filter @filters-changed="updateFilters"></mentor-filter>
   </section>
@@ -6,9 +9,12 @@
     <base-card>
       <div class="controls">
         <base-button mode="outline" @click="loadMentors">Refresh</base-button>
-        <base-button v-if="!isMentor" to="/register" isLink
+        <base-button v-if="!isMentor && !isLoading" to="/register" isLink
           >Register as Mentor</base-button
         >
+      </div>
+      <div v-if="isLoading">
+        <base-spinner></base-spinner>
       </div>
       <ul v-if="hasMentors">
         <mentor-item
@@ -35,7 +41,7 @@ export default {
       return this.$store.getters['mentors/isMentor'];
     },
     hasMentors() {
-      return this.$store.getters['mentors/hasMentors'];
+      return !this.isLoading && this.$store.getters['mentors/hasMentors'];
     },
     filteredMentors() {
       // since getters are namespaced, they can't be accessed via this.$store.getters.getter_name
@@ -68,14 +74,25 @@ export default {
         backend: true,
         career: true,
       },
+      isLoading: false,
+      error: null,
     };
   },
   methods: {
     updateFilters(updatedFilters) {
       this.activeFilters = updatedFilters;
     },
-    loadMentors() {
-      this.$store.dispatch('mentors/loadMentors');
+    async loadMentors() {
+      this.isLoading = true;
+      try {
+        await this.$store.dispatch('mentors/loadMentors');
+      } catch {
+        this.error = error.message || 'Something went wrong!';
+      }
+      this.isLoading = false;
+    },
+    handleError() {
+      this.error = null;
     },
   },
 };

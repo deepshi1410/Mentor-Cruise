@@ -6,6 +6,7 @@ import ContactMentor from './views/requests/ContactMentor.vue'
 import MentorRegisteration from './views/mentors/MentorRegisteration.vue'
 import RequestsReceived from './views/requests/RequestsReceived.vue'
 import NotFound from './views/NotFound.vue'
+import UserAuth from './views/auth/UserAuth.vue'
 const router = createRouter({
   history: createWebHistory(),
   routes: [{
@@ -33,6 +34,10 @@ const router = createRouter({
   {
     path: '/requests',
     component: RequestsReceived
+  },
+  {
+    path: '/auth',
+    component: UserAuth
   },
   {
     path: '/notFound(.*)',

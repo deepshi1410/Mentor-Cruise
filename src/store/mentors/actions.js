@@ -33,7 +33,7 @@ export default {
       // error ...
     }
     const mentors = []
-    for (key in responseData) {
+    for (let key in responseData) {
       const mentor = {
         id: key,
         firstName: responseData[key].firstName,

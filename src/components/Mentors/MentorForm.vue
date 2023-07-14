@@ -149,7 +149,6 @@ export default {
         areas: this.areas.value,
         hourlyRate: this.rate.value,
       };
-      console.log(formData);
       this.$emit('save-data', formData);
     },
   },
