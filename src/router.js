@@ -7,7 +7,7 @@ import ContactMentor from './views/requests/ContactMentor.vue'
 import MentorRegisteration from './views/mentors/MentorRegisteration.vue'
 import RequestsReceived from './views/requests/RequestsReceived.vue'
 import NotFound from './views/NotFound.vue'
-// import store from './store/index.js';
+import store from './store/index.js';
 import UserAuth from './views/auth/UserAuth.vue'
 // an optimisation that we import components only when needed
 // const MentorDetails = defineAsyncComponent(() =>
