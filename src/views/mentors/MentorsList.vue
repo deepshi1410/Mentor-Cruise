@@ -19,7 +19,11 @@
           <base-button link to="/auth?redirect=register" v-if="!isLoggedIn"
             >Login to Register as Mentor</base-button
           >
-          <base-button v-if="isLoggedIn && !isMentor && !isLoading" link to="/register">Register as Mentor</base-button
+          <base-button
+            v-if="isLoggedIn && !isMentor && !isLoading"
+            link
+            to="/register"
+            >Register as Mentor</base-button
           >
         </div>
         <div v-if="isLoading">
@@ -59,7 +63,7 @@ export default {
   },
   computed: {
     isLoggedIn() {
-      return this.$store.isAuthenticated;
+      return this.$store.getters.isAuthenticated;
     },
     isMentor() {
       return this.$store.getters['mentors/isMentor'];

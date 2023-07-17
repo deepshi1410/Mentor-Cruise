@@ -7,7 +7,7 @@ import ContactMentor from './views/requests/ContactMentor.vue'
 import MentorRegisteration from './views/mentors/MentorRegisteration.vue'
 import RequestsReceived from './views/requests/RequestsReceived.vue'
 import NotFound from './views/NotFound.vue'
-import store from './store/index.js';
+// import store from './store/index.js';
 import UserAuth from './views/auth/UserAuth.vue'
 // an optimisation that we import components only when needed
 // const MentorDetails = defineAsyncComponent(() =>
@@ -48,18 +48,18 @@ const router = createRouter({
   },
   {
     path: '/register',
-    component: MentorRegisteration,
-    meta: { requiresAuth: true }
+    component: MentorRegisteration
+    // meta: { requiresAuth: true }
   },
   {
     path: '/requests',
-    component: RequestsReceived,
-    meta: { requiresAuth: true }
+    component: RequestsReceived
+    // meta: { requiresAuth: true }
   },
   {
     path: '/auth',
-    component: UserAuth,
-    meta: { requiresUnauth: true }
+    component: UserAuth
+    // meta: { requiresUnauth: true }
   },
   {
     path: '/notFound(.*)',
@@ -68,14 +68,15 @@ const router = createRouter({
   ]
 })
 
-router.beforeEach(function (to, _, next) {
-  if (to.meta.requiresAuth && !store.getters.isAuthenticated) {
-    next('/auth');
-  } else if (to.meta.requiresUnauth && store.getters.isAuthenticated) {
-    next('/mentors');
-  } else {
-    next();
-  }
-});
+// router.beforeEach(function (to, _, next) {
+//   debugger
+//   if (to.meta.requiresAuth && !store.getters.isAuthenticated) {
+//     next('/auth');
+//   } else if (to.meta.requiresUnauth && store.getters.isAuthenticated) {
+//     next('/mentors');
+//   } else {
+//     next();
+//   }
+// });
 
 export default router;
