@@ -14,7 +14,7 @@
         </div>
         <div class="form-control">
           <label for="password">Password</label>
-          <input type="text" id="password" v-model.trim="password" />
+          <input type="password" id="password" v-model.trim="password" />
         </div>
         <p v-if="!isFormValid">
           Please enter a valid email and password (atleast 8 characters long)
@@ -78,8 +78,10 @@ export default {
         } else {
           await this.$store.dispatch('signup', actionPayload);
         }
+        const redirectUrl = '/' + (this.$route.query.redirect || 'mentors');
+        this.$router.replace(redirectUrl);
       } catch (error) {
-        this.error = error || 'Faile to authenticate. Try again later.';
+        this.error = error || 'Failed to authenticate. Try again later.';
       }
       this.isLoading = false;
     },
