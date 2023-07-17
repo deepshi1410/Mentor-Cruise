@@ -1,11 +1,13 @@
 import { createRouter, createWebHistory } from 'vue-router'
 // importing all the views components and registering them with the routes
 import MentorsList from './views/mentors/MentorsList.vue'
+import { defineAsyncComponent } from 'vue'
 // import MentorDetails from './views/mentors/MentorDetails.vue'
 // import ContactMentor from './views/requests/ContactMentor.vue'
 // import MentorRegisteration from './views/mentors/MentorRegisteration.vue'
 // import RequestsReceived from './views/requests/RequestsReceived.vue'
 import NotFound from './views/NotFound.vue'
+import store from './store/index.js';
 // import UserAuth from './views/auth/UserAuth.vue'
 // an optimisation that we import components only when needed
 const MentorDetails = defineAsyncComponent(() =>
@@ -21,7 +23,7 @@ const RequestsReceived = defineAsyncComponent(() =>
   import('./views/requests/RequestsReceived.vue')
 );
 const UserAuth = defineAsyncComponent(() =>
-  import('./pages/auth/UserAuth.vue')
+  import('./views/auth/UserAuth.vue')
 );
 
 const router = createRouter({
@@ -66,12 +68,11 @@ const router = createRouter({
   ]
 })
 
-
 router.beforeEach(function (to, _, next) {
   if (to.meta.requiresAuth && !store.getters.isAuthenticated) {
     next('/auth');
   } else if (to.meta.requiresUnauth && store.getters.isAuthenticated) {
-    next('/coaches');
+    next('/mentors');
   } else {
     next();
   }
